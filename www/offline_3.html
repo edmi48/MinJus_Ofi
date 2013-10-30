@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html class="no-js ui-mobile-rendering" lang="es">
+ <head>
+      <title>Búsqueda de Casas de Justicia y Centros de Convivencia Ciudadana</title>
+      <meta http-equiv="Content-Type" name="viewport" content="width=device-width; initial-scale=1; charset=UTF-8">
+		
+		<style type="text/css" title="currentStyle">
+			@import "css/demo_page.css";
+			@import "css/demo_table.css";
+			@import "css/jquery-ui-1.8.4.custom.css";
+			.ui-tabs .ui-tabs-panel { padding: 10px }
+		</style>
+		<link rel="stylesheet" type="text/css" href="css/style_offline.css">
+		<script type="text/javascript" language="javascript" src="js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
+		<script type="text/javascript" language="javascript" src="js/jquery-ui-tabs.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			var DataSet_CJ = [];
+			var DataSet_CCC = [];
+			
+    function carga()
+	{
+     db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
+
+ 	 db.transaction(function(tx) 
+				    {
+            	  	 tx.executeSql("SELECT tipo_programa, departamento, municipio, nombre_lugar, direccion_lugar, barrio_lugar, telefono_lugar, email FROM ubicacion_programa order by tipo_programa, departamento, municipio", [],
+                  	 function(tx, result)
+					 {
+					  contador = result.rows.length - 1; 
+                   	  for(var i=0; i < result.rows.length; i++) 
+					  {
+					   if (result.rows.item(i)['departamento'] == result.rows.item(i)['municipio']) ubicacion = result.rows.item(i)['codigo_dane_municipio'];
+					  else ubicacion = result.rows.item(i)['departamento']+" - "+result.rows.item(i)['municipio']
+					   if (result.rows.item(i)['tipo_programa'] == 'Casa de Justicia')
+					    DataSet_CJ.push([ubicacion+" "+result.rows.item(i)['direccion_lugar']+" "+result.rows.item(i)['barrio_lugar'], result.rows.item(i)['telefono_lugar'],result.rows.item(i)['email']]);
+					   else
+					    DataSet_CCC.push([ubicacion+" "+result.rows.item(i)['direccion_lugar']+" "+result.rows.item(i)['barrio_lugar'], result.rows.item(i)['telefono_lugar'],result.rows.item(i)['email']]);
+                   	  }
+
+
+				$("#tabs").tabs( {
+					"show": function(event, ui) {
+						var table = $.fn.dataTable.fnTables(true);
+						if ( table.length > 0 ) {
+							$(table).dataTable().fnAdjustColumnSizing();
+						}
+					}
+				} );
+				
+				$('table.display').dataTable( {
+					"sScrollY": "200px",
+					"bScrollCollapse": true,
+					"bPaginate": false,
+					"bJQueryUI": true,
+					"aoColumnDefs": [
+						{ "sWidth": "10%", "aTargets": [ -1 ] }
+					]
+				} );
+
+			$('#tabla_1').html( '<table cellpadding="0" cellspacing="0" border="0" class="display" id="tblTabla"></table>' );
+			$('#tabla_2').html( '<table cellpadding="0" cellspacing="0" border="0" class="display" id="tblTabla2"></table>' );
+				$('#tblTabla').dataTable( {
+					"bInfo":false,
+			"oLanguage": {
+            "sLengthMenu": "Mostrar _MENU_ records por página",
+            "sZeroRecords": "No hay resultados, intente otra b&uacute;squeda",
+            "sInfo": "Registro del _START_ a _END_ de _TOTAL_ registros",
+            "sInfoEmpty": "Registro 0 a 0 de 0 records",
+            "sInfoFiltered": "(filtered from _MAX_ total records)",
+					"sSearch": "Buscar:",
+			      "oPaginate": {
+        "sFirst": "Inicio",
+		"sLast": "Fin",
+		"sPrevious": "Ant",
+		"sNext": "Sig",
+      }	
+        },
+		"bLengthChange": false,
+		"bAutoWidth": false,
+					"iDisplayLength": 5,
+			
+					"aaData": DataSet_CJ,
+					"aoColumns": [
+						{ "sTitle": "Ubicación", "sWidth": "160px" },
+						{ "sTitle": "Teléfono", "sWidth": "80px" },
+						{ "sTitle": "E-mail", "sWidth": "80px" }
+					]
+				} );		
+
+				$('#tblTabla2').dataTable( {
+					"bInfo":false,
+			"oLanguage": {
+            "sLengthMenu": "Mostrar _MENU_ records por página",
+            "sZeroRecords": "No hay resultados, intente otra b&uacute;squeda",
+            "sInfo": "Registro del _START_ a _END_ de _TOTAL_ registros",
+            "sInfoEmpty": "Registro 0 a 0 de 0 records",
+            "sInfoFiltered": "(filtered from _MAX_ total records)",
+					"sSearch": "Buscar:",
+			      "oPaginate": {
+        "sFirst": "Inicio",
+		"sLast": "Fin",
+		"sPrevious": "Ant",
+		"sNext": "Sig",
+      }	
+        },
+		"bLengthChange": false,
+		"bAutoWidth": false,
+					"iDisplayLength": 5,
+			
+					"aaData": DataSet_CCC,
+					"aoColumns": [
+						{ "sTitle": "Ubicación", "sWidth": "160px" },
+						{ "sTitle": "Teléfono", "sWidth": "80px" },
+						{ "sTitle": "E-mail", "sWidth": "80px" }
+					]
+				} );
+				
+                  	 });
+                 	});		 
+	}
+	
+carga();
+		</script>
+      <link rel="stylesheet" href="css/jquery.mobile-1.3.1.min.css" />
+      <script src="js/libs/require.js" data-main="js/mobile"></script>
+
+	</head>
+	<body id="dt_example" align="center">
+<div id="categories" data-role="page" data-title="Búsqueda de Información" style="background-image: url('images/fondo_2.jpg'); background-repeat:no-repeat; background-size:100% 100%; background-position: absolute">
+<div height=200px style="background-image: url('images/cabecera1.png'); background-repeat:no-repeat; background-size:100% 100%; background-position: absolute">
+<br><br><br><br>
+</div>
+				<div id="tabs">
+					<ul>
+						<li><a href="#tabla_1">Casas de Justicia</a></li>
+						<li><a href="#tabla_2">Centros de Convivencia Ciudadana</a></li>
+					</ul>
+			<div id="tabla_1" align="center"></div>
+			<div id="tabla_2" align="center"></div>
+		</div>	
+		</div>	
+			
+	 <p><a href="orientate.html" data-direction="reverse" data-role="button" data-theme="b">Regresar</a></p>			
+			
+	</body>
+</html>
