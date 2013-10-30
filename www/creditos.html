@@ -65,11 +65,13 @@ updateBackground();
 	document.write('</div>')
 	document.write('<br><br><br><br>')
 	document.write('</div>')
+	var ventana_ancho=$(window).width()-20;
+	var ventana_alto=$(window).height()-200;
 	if ($(window).width() < $(window).height()) {
-		document.write('<img src="images/creditos.png" alt="Fondo" id="bg" style="height: '+$(window).height()+'px; width: '+$(window).width()+'; left: 0px;">') 
+		document.write('<img src="images/creditos.png" alt="Fondo" id="bg" style="height: '+ventana_alto+'px; width: '+ventana_ancho+'; left: 0px;">') 
 	}
 	else {
-		document.write('<img src="images/creditos_ancho.png" alt="Fondo" id="bg" style="height: '+$(window).height()+'px; width: '+$(window).width()+'; left: 0px;">') 
+		document.write('<img src="images/creditos_ancho.png" alt="Fondo" id="bg" style="height: '+ventana_alto+'px; width: '+ventana_ancho+'; left: 0px;">') 
 	}
 	document.write('</div>')
 </script>
