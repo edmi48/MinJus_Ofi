@@ -235,9 +235,10 @@ ventana_ancho2= (ventana_ancho2-300)/2;
     // PhoneGap esta listo, y ahora se pueden hacer llamadas a los métodos
     //
 
-	function abrir_opcion(pagina) 
+	function abrir_opcion(pagina,obligatorio) 
 { 
-if (checkConnection() == 1) {
+if (obligatorio == 0) window.location = (pagina); 
+if ((checkConnection() == 1) || (obligatorio == 0)) {
 	window.location = (pagina); 
 }
 else  $.Zebra_Dialog('<strong>No es posible ejecutar esta funcionalidad sin Conexión a Internet</strong>', {
@@ -322,10 +323,10 @@ function abrir_twitter()
 			document.write('<div id="divIzquierda"></div>')
 			document.write('<div id="divCentro">')
 				document.write('<ul>')
-					document.write('<li><a href="orientate.html" target="_self"><img src="images/opcion1.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
-					document.write('<li><a href="#" onclick=\'abrir_opcion("informate.html");return false\'><img src="images/opcion2.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
+					document.write('<li><a href="#" onclick=\'abrir_opcion("orientate.html",0);return false\'><img src="images/opcion1.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
+					document.write('<li><a href="#" onclick=\'abrir_opcion("informate.html",1);return false\'><img src="images/opcion2.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
 					document.write('<li><a href="#" onclick="abrir_twitter();"><img src="images/opcion3.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
-					document.write('<li><a href="#" onclick=\'abrir_opcion("sugiereme.html");return false\'><img src="images/opcion4.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
+					document.write('<li><a href="#" onclick=\'abrir_opcion("sugiereme.html",1);return false\'><img src="images/opcion4.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
 					document.write('<li><a href="creditos.html" target="_self"><img src="images/opcion5.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
 					document.write('<li><a href="#" onclick=\'actualiza_set_datos();return false\'><img src="images/opcion6.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
 				document.write('</ul>')
@@ -339,11 +340,11 @@ function abrir_twitter()
 		icon_alto = 110;				
 		icon_ancho = 100;
 		document.write('<div class="item shop">')
-                document.write('<a href="orientate.html" target="_self"><img src="images/opcion1.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a>')
+                document.write('<a href="#" onclick=\'abrir_opcion("orientate.html",0);return false\'><img src="images/opcion1.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a>')
 		document.write('</div>')
 				
                 document.write('<div class="item youtube" >')
-                document.write('<a href="#" onclick=\'abrir_opcion("informate.html");return false\'><img src="images/opcion2.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a>')
+                document.write('<a href="#" onclick=\'abrir_opcion("informate.html",1);return false\'><img src="images/opcion2.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a>')
                 document.write('</div>')
 				
                 document.write('<div class="item fav">')
@@ -351,7 +352,7 @@ function abrir_twitter()
                 document.write('</div>')
 				
                 document.write('<div class="item home">')
-                document.write('<a href="#" onclick=\'abrir_opcion("sugiereme.html");return false\'><img src="images/opcion4.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a>')
+                document.write('<a href="#" onclick=\'abrir_opcion("sugiereme.html",1);return false\'><img src="images/opcion4.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a>')
                 document.write('</div>')
 
                 document.write('<div class="item user" >')
