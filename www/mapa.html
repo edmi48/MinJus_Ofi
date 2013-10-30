@@ -347,6 +347,18 @@ function checkConnection()
 		 return conexion;
 }
 
+function abrir_opcion(pagina,obligatorio) 
+{ 
+	if (obligatorio == 0) window.location = (pagina); 
+	if ((checkConnection() == 1) || (obligatorio == 0)) {
+		window.location = (pagina); 
+	}
+	else  $.Zebra_Dialog('<strong>No es posible ejecutar esta funcionalidad sin Conexión a Internet</strong>', {
+		'type':     'error',
+		'title':    'Sin Conexión a Internet'
+	});
+} 
+
 		
 </script>
 </head>
@@ -355,7 +367,7 @@ function checkConnection()
 <div id="categories" data-role="page" data-title="Mapa" style="background-image: url('images/fondo_2.jpg'); background-repeat:no-repeat; background-size:100% 100%; background-position: absolute">
 <div height=200px style="background-image: url('images/cabecera8.png'); background-repeat:no-repeat; background-size:100% 100%; background-position: absolute">
 <div> 
-<a href="orientate.html"> <img src="images/regresar.png" class="imagen-link" height="60px" width="60px" align="left" style="margin: 5px 8px"></a>
+<a href="#" onclick=\'abrir_opcion("orientate.html",0);return false\'> <img src="images/regresar.png" class="imagen-link" height="60px" width="60px" align="left" style="margin: 5px 8px"></a>
 </div>
 <br><br><br><br>
 </div>
