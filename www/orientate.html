@@ -26,6 +26,7 @@
 					  alert(result.rows.length);
 					  contador = result.rows.length - 1; 
 					  autocomplete.disabled = true;
+					  document.getElementById('principal').style.visibility = "hidden";
 					  document.getElementById('cargando').style.visibility = "visible";
                    	  for(var i=0; i < result.rows.length; i++) 
 					  {
@@ -54,6 +55,7 @@
 					{	
 						autocomplete.disabled = false;
 						document.getElementById('cargando').style.visibility = "hidden";
+						document.getElementById('principal').style.visibility = "visible";
 					}
                   	 });
                  	});
