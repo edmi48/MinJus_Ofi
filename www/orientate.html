@@ -10,12 +10,12 @@
   
       var db;
     var data_busqueda = [];
-	alert("1");
+	//alert("1");
 	inicializa_db();
     function inicializa_db() 
 	{
 	data_busqueda.length=0;
-	alert("entra a inicializa_db");
+	//alert("entra a inicializa_db");
      db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
 
   	 db.transaction(function(tx) 
@@ -26,6 +26,7 @@
 					  alert(result.rows.length);
 					  contador = result.rows.length - 1; 
 					  autocomplete.disabled = true;
+					  document.getElementById('cargando').style.visibility = "visible";
                    	  for(var i=0; i < result.rows.length; i++) 
 					  {
 					   data_busqueda.push({value: result.rows.item(i)['nombre_palabra_clave'], data: result.rows.item(i)['programa'], data2: result.rows.item(i)['entidad_encargada'], data3: result.rows.item(i)['descripcion_tipo_informacion']});
@@ -52,6 +53,7 @@
 					if(i==result.rows.length)
 					{	
 						autocomplete.disabled = false;
+						document.getElementById('cargando').style.visibility = "hidden";
 					}
                   	 });
                  	});
@@ -109,6 +111,7 @@ function abrir_opcion(pagina,obligatorio)
   </div><!-- @end #w -->
   
 </div>
+<div id="cargando" style="width: 100%; height: 500px; position: absolute; padding-top:20px; text-align:center"><img src="images/cargando.gif" alt="Fondo" id="bg"></div>
  <br>
  <a href="#" onclick='abrir_opcion("offline.html",0);' data-role="button" data-theme="b">Ver Directorio</a>
  <br><br>		
