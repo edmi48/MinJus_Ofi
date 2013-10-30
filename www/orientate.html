@@ -25,6 +25,7 @@
 					 {
 					  alert(result.rows.length);
 					  contador = result.rows.length - 1; 
+					  autocomplete.disabled = true;
                    	  for(var i=0; i < result.rows.length; i++) 
 					  {
 					   data_busqueda.push({value: result.rows.item(i)['nombre_palabra_clave'], data: result.rows.item(i)['programa'], data2: result.rows.item(i)['entidad_encargada'], data3: result.rows.item(i)['descripcion_tipo_informacion']});
@@ -48,6 +49,10 @@
 						
 					   }
                    	  }
+					if(i==result.rows.length)
+					{	
+						autocomplete.disabled = false;
+					}
                   	 });
                  	});
  
