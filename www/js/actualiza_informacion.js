@@ -123,7 +123,7 @@ function actualiza_informacion(tabla, url)
               tx.executeSql("Select count(*) as numero From "+tabla, [],
                  function(tx, result){
                      for(var i=0; i < result.rows.length; i++) var contador = [result.rows.item(i)['numero']];
-					 alert("Informacion "+tabla+": "+contador);
+					 alert("Informacion: "+tabla+": "+contador);
 					 actualiza_progressbar(porc_ini+'%',porc_fin+'%');
 					 porc_ini = porc_fin;
 					 porc_fin = porc_fin + 20;
