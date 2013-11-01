@@ -8,7 +8,7 @@ $(function(){
             	  	 tx.executeSql("SELECT b.nombre_palabra_clave, a.programa, a.descripcion_tipo_informacion, a.entidad_encargada FROM informacion_programa a, palabra_clave b Where a.id_programa = b.id_programa Order by 1", [],
                   	 function(tx, result)
 					 {
-					  alert(result.rows.length);
+					  //alert(result.rows.length);
 					  contador = result.rows.length - 1; 
                    	  for(var i=0; i < result.rows.length; i++) 
 					   currencies.push({value: result.rows.item(i)['nombre_palabra_clave'], data: result.rows.item(i)['programa'], data2: result.rows.item(i)['entidad_encargada'], data3: result.rows.item(i)['descripcion_tipo_informacion']});
