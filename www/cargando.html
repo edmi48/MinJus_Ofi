@@ -1,0 +1,38 @@
+<html class="no-js ui-mobile-rendering" lang="es">
+<head>
+      <title>Créditos</title>
+
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <script src="js/jquery-1.9.1.min.js"></script>
+
+      <link rel="stylesheet" href="css/jquery.mobile-1.3.1.min.css" />
+      <script src="js/libs/require.js" data-main="js/mobile"></script>
+	  
+<script language="JavaScript" type="text/javascript">
+var x=0;
+function muestraGranDiv(){
+	if(x==0){
+		//alert("1");
+		document.getElementById('granDiv').style.visibility = "hidden";
+		document.getElementById('cargando').style.visibility = "visible";
+		x++;
+		muestraGranDiv();
+	}
+	if(x==2){
+		//alert("2");
+		document.getElementById('granDiv').style.visibility = "visible";
+		document.getElementById('cargando').style.visibility = "hidden";
+	}
+	
+}
+</script>	
+    </head>
+	
+<body  onload="muestraGranDiv()">
+<div id="cargando" style="width: 100%; height: 500px; position: absolute; padding-top:20px; text-align:center"><img src="images/cargando.gif" alt="Fondo" id="bg"></div>
+<div id="granDiv" style="visibility:hidden;">
+<p><a href="index.html" data-direction="reverse" data-role="button" data-theme="b">Regresar</a></p>
+<div>
+		
+    </body>
+</html>
