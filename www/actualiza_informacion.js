@@ -1,16 +1,16 @@
-function actualiza_progressbar(por_ini,por_fin)
+function actualiza_progressbar(porc_ini,porc_fin)
 {		
  var capa = document.getElementById('progressbar');
- if (por_fin == '100%') mensaje = 'Actualización Exitosa';
+ if (porc_fin == '100%') mensaje = 'Actualización Exitosa';
  else mensaje = 'En progreso.. ';
  capa.innerHTML = '<span style="width: 0%; color:white;">'+mensaje+'</span>';
 		
  $(".meter > span").each(function() {
    $(this)
    .data("origWidth", $(this).width())
-   .width(por_ini)
+   .width(porc_ini)
    .animate({
-   width: por_fin
+   width: porc_fin
    }, 2000);
   });		
 }
@@ -18,12 +18,7 @@ function actualiza_progressbar(por_ini,por_fin)
 function actualiza_set_datos()
 {
  var db;
- var porc_ini = 0;
- var porc_fin = 20;
  db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
- actualiza_progressbar(porc_ini+'%',porc_fin+'%');
- porc_ini = porc_fin;
- porc_fin = porc_fin + 20;
  $.Zebra_Dialog('<strong>Inicia proceso de actualización de información de click en aceptar y por favor espere un momento a que el proceso finalice...', {
     'type':     'information',
     'title':    'Actualización de Información',
@@ -47,6 +42,8 @@ function actualiza_informacion(tabla, url)
 { 
  var sql_query = new Array();
  var actualizame = 0;
+ var porc_ini = 0;
+ var porc_fin = 20;
  var result = $.ajax({
                     url : url,
                     type : 'GET',
@@ -65,7 +62,7 @@ function actualiza_informacion(tabla, url)
 			//alert('Entra a actualizar '+tabla);
 			actualiza_progressbar(porc_ini+'%',porc_fin+'%');
 			porc_ini = porc_fin;
-			porc_fin = porc_fin + 30;
+			porc_fin = porc_fin + 20;
 			$.each(r.d, function(k, v) {
 				if (tabla == 'informacion_programa') 
 				{
@@ -126,7 +123,10 @@ function actualiza_informacion(tabla, url)
               tx.executeSql("Select count(*) as numero From "+tabla, [],
                  function(tx, result){
                      for(var i=0; i < result.rows.length; i++) var contador = [result.rows.item(i)['numero']];
-					 //alert("Informacion "+tabla+": "+contador);
+					 //alert("Informacion: "+tabla+": "+contador);
+					 actualiza_progressbar(porc_ini+'%',porc_fin+'%');
+					 porc_ini = porc_fin;
+					 porc_fin = porc_fin + 20;
 					 if (tabla == 'ubicacion_programa')
 					 {						 
 					  actualiza_progressbar('80%','100%');

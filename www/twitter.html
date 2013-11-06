@@ -1,0 +1,46 @@
+<html class="no-js ui-mobile-rendering" lang="es">
+<head>
+      <title>Twitter</title>
+      <meta name="description" content="">
+
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <script src="js/jquery-1.9.1.min.js"></script>
+	  <script src="js/jquery.proquo.js"></script>
+
+
+      <link rel="stylesheet" href="css/jquery.mobile-1.3.1.min.css" />
+      <script src="js/libs/require.js" data-main="js/mobile"></script>
+	  <script>
+	  $(document).ready(function(){$('.compartir').proQuo({useTwitterButton: true});});
+	  </script>
+
+	<script>
+	!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],
+	p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);
+	js.id=id;js.src=p+"js/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}
+	(document,"script","twitter-wjs");
+	</script>
+
+<script type="text/javascript"> 
+function leerGET(){ 
+  var cadGET = location.search.substr(1,location.search.length); 
+  var arrGET = cadGET.split("&"); 
+  return arrGET; 
+  } 
+
+</script> 
+	
+</head>
+<body>
+
+
+<div id="categories" data-role="page" data-title="Twitter">
+    
+  <script>
+  var id_owner = '352973335937814528';
+  var valor = leerGET(); 
+  document.write('<a class="twitter-timeline" href="https://twitter.com/twitterapi" data-widget-id="'+id_owner+'" data-screen-name="'+valor[0]+'" width="400" height="250" lang="ES"></a>');  
+  </script>
+</div>
+</body>
+</html>

@@ -9,6 +9,7 @@
       <script src="js/libs/require.js" data-main="js/mobile"></script>
 	  <script type="text/javascript" src="js/zebra_dialog.js"></script>
 	  <link rel="stylesheet" href="css/zebra_dialog.css" type="text/css">
+	  <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
 	  
 	  
 	  <script type="text/javascript">
@@ -92,7 +93,7 @@
     //
 function onDeviceReady() {
 	//alert("4");
-		navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximumAge:3000,timeout:40000,enableHighAccuracy:true});
+		navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximumAge:3000,timeout:30000,enableHighAccuracy:true});
     }
 
     // onSuccess Geolocation
@@ -127,7 +128,7 @@ function onError(error) {
 	}
 	else if(error.code==3)
 	{
-		alert("Verifique la conexiòn a internet o si tiene activado el GPS");
+		alert("La conexión a Internet no es buena y no es posible visualizar el mapa");
 		window.location="index.html";
 	}
 	else if(error.code==2)
@@ -171,8 +172,7 @@ Lngdes = -74.060066;
 			var directionsService = new google.maps.DirectionsService();
 			var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);			
 
-function initialize() 
-{
+function initialize() {
 //alert("1");
 var url = location.href;
 	var url = location.href;
@@ -180,27 +180,21 @@ var url = location.href;
 	
 	db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
     sentencia = "select valor_parametro from parametro where codigo_tparametro = 5";
-               db.transaction( function(tx) {
-                        tx.executeSql(sentencia, [],
-                                function(tx, result){
-									     if (result.rows.item(0)['valor_parametro']=="Casa de Justicia")
-										 {
-										  nom_programa="Casa de Justicia";
-										  icon_destino="Casa de Justicia";
-											onDeviceReady();
-										 }
-										 else
-										 {
-										  nom_programa="Centro de Convivencia";
-										  icon_destino="Centro de Convivencia Ciudadana";
-										  onDeviceReady();
-										 }
-	//alert("3");						 
-										 //alert(result.rows.item(0)['valor_parametro']);
-										 //onDeviceReady();		
-	//mostrarMapa();										 
-								})
-							})
+
+	var Entidad = url.substring(index+9, index+13);
+	//alert("2");
+	if (Entidad=="Casa"){
+		nom_programa="Casa de Justicia";
+		icon_destino="Casa de Justicia";
+	}
+	else
+	{
+		nom_programa="Centro de Convivencia";
+		icon_destino="Centro de Convivencia Ciudadana";
+	}
+	//alert("3");
+	onDeviceReady();		
+	//mostrarMapa();
 }
 						
 function Dist(lat1, lon1, lat2, lon2)
@@ -250,7 +244,7 @@ function mostrarMapa(){
 			MyDestination = new google.maps.LatLng(Latdes, Lngdes);
 			directionsService = new google.maps.DirectionsService();
 			directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
-			//alert("motrar mapa");
+			alert("motrar mapa");
 			var mtv = new google.maps.LatLng(Latori, Lngori);
 				showDirections();
 				map = new google.maps.Map(document.getElementById('map_canvas'), {
@@ -343,6 +337,43 @@ function mostrarInfo (r_direc, r_nombre,r_tel,r_correo) {
 	
 }
 
+function validaconexion (){
+	alert("valida conexion");
+	if (checkConnection() == 1) {
+		alert("ok conexion");
+		initialize();
+	}
+	else  {
+	alert("No es posible ejecutar esta funcionalidad sin Conexión a Internet");
+	window.location = ("orientate.html"); 
+	} 
+	//alert(conexion+"2");
+}
+
+function checkConnection() 
+{
+	//alert("checkConnection");
+	//alert(navigator.connection.type);
+		 if(navigator.connection.type == Connection.NONE){ 
+		  var conexion = 0;
+		  }else{
+		  var conexion = 1;
+		  }
+		 // alert(conexion);
+		 return conexion;
+}
+
+function abrir_opcion(pagina,obligatorio) 
+{ 
+	if (obligatorio == 0) window.location = (pagina); 
+	if ((checkConnection() == 1) || (obligatorio == 0)) {
+		window.location = (pagina); 
+	}
+	else  $.Zebra_Dialog('<strong>No es posible ejecutar esta funcionalidad sin Conexión a Internet</strong>', {
+		'type':     'error',
+		'title':    'Sin Conexión a Internet'
+	});
+} 
 
 		
 </script>
@@ -352,7 +383,7 @@ function mostrarInfo (r_direc, r_nombre,r_tel,r_correo) {
 <div id="categories" data-role="page" data-title="Mapa" style="background-image: url('images/fondo_2.jpg'); background-repeat:no-repeat; background-size:100% 100%; background-position: absolute">
 <div height=200px style="background-image: url('images/cabecera8.png'); background-repeat:no-repeat; background-size:100% 100%; background-position: absolute">
 <div> 
-<a href="#" onclick="orientate.html"> <img src="images/regresar.png" class="imagen-link" height="60px" width="60px" align="left" style="margin: 5px 8px"></a>
+<a href="#" onclick='abrir_opcion("orientate.html",0);return false'> <img src="images/regresar.png" class="imagen-link" height="60px" width="60px" align="left" style="margin: 5px 8px"></a>
 </div>
 <br><br><br><br>
 </div>

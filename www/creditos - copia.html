@@ -1,12 +1,12 @@
-<html class="no-js ui-mobile-rendering" lang="es">
+﻿<html class="no-js ui-mobile-rendering" lang="es">
 <head>
       <title>Créditos</title>
 
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	  <script src="js/jquery-1.9.1.min.js"></script>
+
       <link rel="stylesheet" href="css/jquery.mobile-1.3.1.min.css" />
       <script src="js/libs/require.js" data-main="js/mobile"></script>
-	  <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
-	  <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
 	  
 <script>
 
@@ -19,11 +19,11 @@ var bg = jQuery("#bg");
 ratio = 1;
  
 if (screenWidth/screenHeight > ratio) {
-$(bg).height($(window).height()-95);
+$(bg).height("95%");
 $(bg).width("100%");
 } else {
 $(bg).width("100%");
-$(bg).height($(window).height()-95);
+$(bg).height("90%");
 }
  
 // Si a la imagen le sobra anchura, la centramos a mano
@@ -58,7 +58,7 @@ updateBackground();
 	
 <body onresize="window.location.reload();">
 <script> 
-//alert("hola");
+alert("hola");
 	document.write('<div>')
 	document.write('<div height=200px style="background-image: url(images/cabecera9.png); background-repeat:no-repeat; background-size:100% 100%; background-position: absolute">')
 	document.write('<div>') 
@@ -66,21 +66,19 @@ updateBackground();
 	document.write('</div>')
 	document.write('<br><br><br><br>')
 	document.write('</div>')
-	
 	var ventana_ancho=$(window).width()-35;
 	var ventana_alto=$(window).height()-95;
 	if ($(window).width() < $(window).height()) {
-		
+		document.write('<div>') 
 		document.write('<img src="images/creditos.png" alt="Fondo" id="bg" style="height: '+ventana_alto+'px; width: '+ventana_ancho+'; left: 0px;">') 
-		
+		document.write('</div>')
 	}
 	else {
-		
+		document.write('<div>') 
 		document.write('<img src="images/creditos_ancho.png" alt="Fondo" id="bg" style="height: '+ventana_alto+'px; width: '+ventana_ancho+'; left: 0px;">') 
-		
+		document.write('</div>')
 	}
 	document.write('</div>')
-	
 </script>
 		
     </body>

@@ -102,16 +102,19 @@ tx.executeSql("insert into tipo_parametro values(1,'Correo Electrónico');")
 tx.executeSql("insert into tipo_parametro values(2,'Cuenta Twitter');")
 tx.executeSql("insert into tipo_parametro values(3,'Cuenta Youtube');")
 tx.executeSql("insert into tipo_parametro values(4,'Set de Datos Abiertos');")
+tx.executeSql("insert into tipo_parametro values(5,'Generar Mapa');")
 
 tx.executeSql("Delete from parametro;")
 
 tx.executeSql("insert into parametro values(1,'simonmoya@gmail.com','E-mail Ministerio de Justicia',1);")
 tx.executeSql("insert into parametro values(2,'winnie54817@gmail.com','E-mail Ministerio de Justicia',1);")
-tx.executeSql("insert into parametro values(3,'MinjusticiaCo','Ministerio de Justicia',2);")
-tx.executeSql("insert into parametro values(4,'hC9tD_GTxNg','Casas de Justicia',3);")
-tx.executeSql("insert into parametro values(5,'mcf8Wwqw4JQ','Centros de Convivencia Ciudadana',3);")
-tx.executeSql("insert into parametro values(6,'http://servicedatosabiertoscolombia.cloudapp.net/v1/Ministerio_de_Justicia/informacionprogramas?$format=json','informacion_programa',4);")
-tx.executeSql("insert into parametro values(7,'http://servicedatosabiertoscolombia.cloudapp.net/v1/Ministerio_de_Justicia/ubicacionprogramas?$format=json','ubicacion_programa',4);")
+tx.executeSql("insert into parametro values(3,'hmoreno@ospinternational.com','E-mail Ministerio de Justicia',1);")
+tx.executeSql("insert into parametro values(4,'MinjusticiaCo','Ministerio de Justicia',2);")
+tx.executeSql("insert into parametro values(5,'hC9tD_GTxNg','Casas de Justicia',3);")
+tx.executeSql("insert into parametro values(6,'mcf8Wwqw4JQ','Centros de Convivencia Ciudadana',3);")
+tx.executeSql("insert into parametro values(7,'http://servicedatosabiertoscolombia.cloudapp.net/v1/Ministerio_de_Justicia/informacionprogramas?$format=json','informacion_programa',4);")
+tx.executeSql("insert into parametro values(8,'http://servicedatosabiertoscolombia.cloudapp.net/v1/Ministerio_de_Justicia/ubicacionprogramas?$format=json','ubicacion_programa',4);")
+tx.executeSql("insert into parametro values(9,'Casa de Justicia','Casa de Justicia',5);")
 
 tx.executeSql("Select count(*) as numero From palabra_clave", [],
                 function(tx, result){
