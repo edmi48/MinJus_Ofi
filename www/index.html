@@ -312,10 +312,13 @@ function abrir_twitter()
 	else {
 		icon_alto = 65;				
 		icon_ancho = 60;
-		ventana_alto3 = (($(window).height())/10)*5;
+		ventana_alto3 = (($(window).height())/10)*5.7;
 	}
  if ($(window).width() < 490)
  {
+	//alert($(window).width());
+	//alert($(window).height());
+	//alert(ventana_alto3);
 	document.write('<div id="divCarousel" style="left: '+ventana_ancho2+'px; top:'+ventana_alto3+'px">')
 			document.write('<div id="divIzquierda"></div>')
 			document.write('<div id="divCentro">')
