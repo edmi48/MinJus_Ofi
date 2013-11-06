@@ -1,16 +1,22 @@
 ﻿<html class="no-js ui-mobile-rendering" lang="es">
 <head>
-      <title>TODO BIEN - ORIENTATE</title>
+      <title>ORIENTATE</title>
 
       <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <script src="js/jquery-1.9.1.min.js"></script>
-
-      <link rel="stylesheet" href="css/jquery.mobile-1.3.1.min.css" />
       <script src="js/libs/require.js" data-main="js/mobile"></script>
 	  
-<style>
-  #map_canvas { float:left; width: 400px; height: 400px; }
-</style>
+	  
+	  
+	  <script type="text/javascript">
+			var mapa_ancho = $(window).width() - 50 ;
+			var mapa_alto = $(window).height() - 100 ;
+			var sheet = document.createElement('style')
+			sheet.innerHTML = "#map_canvas { float:center; width: "+mapa_ancho+"px; height: "+mapa_alto+"px; }";
+			document.head.appendChild(sheet);
+	  </script>
+	  
+
 
 <script type="text/javascript">
  var db;
@@ -47,12 +53,12 @@
         function InicializaDatos() {
      db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
     sentencia = "Select nombre_lugar, direccion_lugar, telefono_lugar, email, latitud, longitud From ubicacion_programa  where tipo_programa='"+nom_programa+"'";
- alert("Sentencia: "+sentencia);
+// alert("Sentencia: "+sentencia);
 
                 db.transaction( function(tx) {
                         tx.executeSql(sentencia, [],
                                 function(tx, result){
- alert(result.rows.length);
+ //alert(result.rows.length);
                                         for(var i=0; i < result.rows.length; i++)  
 					{
 					
@@ -63,7 +69,7 @@
 					 Telefono_destino_calc = result.rows.item(i)['telefono_lugar'];
 					 Correo_destino_calc = result.rows.item(i)['email'];
 					 calcularDistancia();
-//					 alert("8"+i);
+					 //alert("8"+i);
 					 if (i == (result.rows.length-1)) mostrarMapa();
 					}
                                 });
@@ -72,7 +78,7 @@
 
         }
 </script>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript">
 			
 			
@@ -83,7 +89,7 @@
     //
 function onDeviceReady() {
 	//alert("4");
-		navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximumAge:3000,timeout:25000,enableHighAccuracy:true});
+		navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximumAge:3000,timeout:40000,enableHighAccuracy:true});
     }
 
     // onSuccess Geolocation
@@ -111,9 +117,29 @@ function onSuccess(position) {
     // onError Callback receives a PositionError object
     //
 function onError(error) {
-        alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
+	if(error.code==1)
+	{
+		alert("No es posible ingresar a la funcionalidad por denegar permisos de ubicación");
+		window.location="index.html";
+	}
+	else if(error.code==3)
+	{
+		alert("Verifique la conexiòn a internet o si tiene activado el GPS");
+		window.location="index.html";
+	}
+	else if(error.code==2)
+	{
+		alert("2 Verifique la conexiòn a internet o si tiene activado el GPS");
+		window.location="index.html";
+	}
+	else {
+		alert("error");
+        //alert('code: '    + error.code    + '\n' +
+         //     'message: ' + error.message + '\n');
+		//window.location="index.html";
     }
+}
+
 
 function pintarRuta(){
 	var MyOrigin = new google.maps.LatLng(Latori, Lngori);
@@ -142,25 +168,36 @@ Lngdes = -74.060066;
 			var directionsService = new google.maps.DirectionsService();
 			var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);			
 
-function initialize() {
+function initialize() 
+{
 //alert("1");
 var url = location.href;
 	var url = location.href;
 	var index = url.indexOf("?");
-	var Entidad = url.substring(index+9, index+13);
-	//alert("2");
-	if (Entidad=="Casa"){
-		nom_programa="Casa de Justicia";
-		icon_destino="Casa de Justicia";
-	}
-	else
-	{
-		nom_programa="Centro de Convivencia";
-		icon_destino="Centro de Convivencia Ciudadana";
-	}
-	//alert("3");
-	onDeviceReady();		
-	//InicializaDatos();
+	
+	db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
+    sentencia = "select valor_parametro from parametro where codigo_tparametro = 5";
+               db.transaction( function(tx) {
+                        tx.executeSql(sentencia, [],
+                                function(tx, result){
+									     if (result.rows.item(0)['valor_parametro']=="Casa de Justicia")
+										 {
+										  nom_programa="Casa de Justicia";
+										  icon_destino="Casa de Justicia";
+											onDeviceReady();
+										 }
+										 else
+										 {
+										  nom_programa="Centro de Convivencia";
+										  icon_destino="Centro de Convivencia Ciudadana";
+										  onDeviceReady();
+										 }
+	//alert("3");						 
+										 //alert(result.rows.item(0)['valor_parametro']);
+										 //onDeviceReady();		
+	//mostrarMapa();										 
+								})
+							})
 }
 						
 function Dist(lat1, lon1, lat2, lon2)
@@ -183,11 +220,11 @@ function Dist(lat1, lon1, lat2, lon2)
 function calcularDistancia() {
 		if (Latdes_calc<-91 || Latdes_calc>91)
 		{
-			alert("latitud errada"+Nombre_destino);
+			alert("latitud errada "+Nombre_destino);
 			//return false;
 		}
 		if (Lngdes_calc<-181 || Lngdes_calc>181){
-			alert("longitud errada"+Nombre_destino);
+			alert("longitud errada "+Nombre_destino);
 			//return false;
 		}
 		
@@ -210,12 +247,12 @@ function mostrarMapa(){
 			MyDestination = new google.maps.LatLng(Latdes, Lngdes);
 			directionsService = new google.maps.DirectionsService();
 			directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
-			
+			//alert("motrar mapa");
 			var mtv = new google.maps.LatLng(Latori, Lngori);
 				showDirections();
 				map = new google.maps.Map(document.getElementById('map_canvas'), {
 					center : mtv,
-					zoom : 7,
+					zoom : 13,
 					mapTypeId : 'roadmap',
 					icon: 'images/derecha.png'
 				});
@@ -304,25 +341,29 @@ function mostrarInfo (r_direc, r_nombre,r_tel,r_correo) {
 }
 
 
-
 		
 </script>
 </head>
 	
-<body onload="initialize()">
+<body onload="initialize();">
+<div id="categories" data-role="page" data-title="Mapa" style="background-image: url('images/fondo_2.jpg'); background-repeat:no-repeat; background-size:100% 100%; background-position: absolute">
+<div height=200px style="background-image: url('images/cabecera8.png'); background-repeat:no-repeat; background-size:100% 100%; background-position: absolute">
+<div> 
+<a href="orientate.html" target="_self"> <img src="images/regresar.png" class="imagen-link" height="60px" width="60px" align="left" style="margin: 5px 8px"></a>
+</div>
+<br><br><br><br>
+</div>
 <center><div id="container" style="width: auto; height: auto; margin: auto auto"></div></center>
-<div data-role="header">
-		<h1>TodoBien - Oriéntate</h1>
-	</div><!-- /header -->
+
 <div data-role="content" >
 <div id='top_content'>
 				<!--<input type="button" value="Get Me Directions" onClick="showDirections();">   -->
 </div>
-<div id="map_canvas"></div>
+<center>
+<div id="map_canvas"></div></center>
 	<div id="directions-panel">
 	<!--Directions displayed here:	-->
 	</div>
 	</div><!-- /content -->
-	<div <p><a href="orientate.html" data-direction="reverse" data-role="button" data-theme="b">Regresar</a></p>			</div>
 	</body>
 </html>
